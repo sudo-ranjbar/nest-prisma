@@ -4,11 +4,12 @@ import { AppService } from './app.service';
 import { UserModule } from '../user/user.module';
 import { LoggerMiddleware } from 'src/middlewares/logger.middleware';
 import { logger } from 'src/middlewares/loggerFunctional.middleware';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [UserModule],
   controllers: [AppController],
   providers: [AppService],
+  imports: [UserModule, AuthModule],
 })
 export class AppModule implements NestModule{
 
