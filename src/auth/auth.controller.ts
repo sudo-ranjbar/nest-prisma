@@ -10,7 +10,7 @@ export class AuthController {
 
   @Post('/register')
   // function
-  async register(@Body() createData: CreateUserDTO): Promise<User> {
-    return await this.authService.register(createData)
+  async register(@Body() registerData: CreateUserDTO): Promise<User> {
+    return await this.authService.register(registerData)
   }
 }
