@@ -37,11 +37,22 @@ export class AuthService {
 
   // LOGIN METHOD
   async login(user: User){
-    const payload = { id: user.id, email: user.email };
+    
+    // database approach used for logout operation in server
+    const token = this.jwtService.sign({
+      id: user.id,
+      email: user.email
+    });
 
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    await this.updateToken(user.id, token);
+
+    return {token}
+
+    // const payload = { id: user.id, email: user.email };
+
+    // return {
+    //   access_token: this.jwtService.sign(payload),
+    // };
   }
 
   // VALIDATE USER
@@ -58,5 +69,36 @@ export class AuthService {
       
     return user;
 
+  }
+
+  // UPDATE TOKEN
+  async updateToken(id: number, token: string){
+    await this.prisma.user.update({
+
+      where: {id},
+      data: {token}
+    });
+
+  }
+
+  // REMOVE TOKEN
+  async removeToken(id: number){
+    await this.prisma.user.update({
+
+      where: { id },
+      data: { token: null }
+    });
+
+  }
+
+  // CHECK FOR LOGIN
+  async checkLoggedIn(id: number){
+    const user = await this.prisma.user.findUnique({
+      where: {id}
+    });
+
+    if (user?.token === null) return false;
+
+    return true;
   }
 }

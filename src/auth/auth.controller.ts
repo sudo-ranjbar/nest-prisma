@@ -3,6 +3,7 @@ import { LoginDTO, RegisterDTO } from './dto';
 import { User } from '@prisma/client';
 import { AuthService } from './auth.service';
 import { LocalAuthGaurd } from './local-auth.gaurd';
+import { AccessTokenGaurd } from './access-token.gaurd';
 
 @Controller('auth')
 export class AuthController {
@@ -20,6 +21,15 @@ export class AuthController {
   @Post('/login')
   async login(@Body() loginData: LoginDTO, @Request() req: any): Promise<any> {
     return this.authService.login(req.user);
+  }
+
+  // LOGIN
+  @UseGuards(AccessTokenGaurd)
+  @Post('/logout')
+  async logout(@Request() req: any): Promise<any> {
+    await this.authService.removeToken(req.user.id)
+
+    return {message: 'user logged out'};
   }
 
 }
