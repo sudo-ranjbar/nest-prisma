@@ -41,7 +41,8 @@ export class AuthService {
     // database approach used for logout operation in server
     const token = this.jwtService.sign({
       id: user.id,
-      email: user.email
+      email: user.email,
+      role: user.role
     });
 
     await this.updateToken(user.id, token);

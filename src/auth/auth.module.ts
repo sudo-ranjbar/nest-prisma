@@ -3,10 +3,10 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from 'src/user/user.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
-import { LocalStrategy } from './local.strategy';
+import { LocalStrategy } from './gaurd/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { AccessStrategy } from './access.strategy';
+import { AccessStrategy } from './gaurd/access.strategy';
 
 @Module({
   controllers: [AuthController],

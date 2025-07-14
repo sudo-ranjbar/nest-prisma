@@ -1,7 +1,7 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { AuthService } from "./auth.service";
+import { AuthService } from "../auth.service";
 
 @Injectable()
 export class AccessStrategy extends PassportStrategy(Strategy) {
@@ -18,6 +18,6 @@ export class AccessStrategy extends PassportStrategy(Strategy) {
 
     if (!isLoggedIn) throw new UnauthorizedException('user has logged out!');
 
-    return { id: payload.id, email: payload.email }
+    return { id: payload.id, email: payload.email, role: payload.role }
   }
 }

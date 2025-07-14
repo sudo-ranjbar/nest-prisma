@@ -8,13 +8,16 @@ import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+
+  ],
   imports: [UserModule, AuthModule],
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
 
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes({path: 'user/*path', method: RequestMethod.GET})
+    consumer.apply(LoggerMiddleware).forRoutes({ path: 'user/*path', method: RequestMethod.GET })
     // consumer.apply(logger).forRoutes({path: '/user/*', method: RequestMethod.GET})
   }
 }

@@ -2,8 +2,8 @@ import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
 import { LoginDTO, RegisterDTO } from './dto';
 import { User } from '@prisma/client';
 import { AuthService } from './auth.service';
-import { LocalAuthGaurd } from './local-auth.gaurd';
-import { AccessTokenGaurd } from './access-token.gaurd';
+import { LocalAuthGaurd } from './gaurd/local-auth.gaurd';
+import { AccessTokenGaurd } from './gaurd/access-token.gaurd';
 
 @Controller('auth')
 export class AuthController {
@@ -29,7 +29,7 @@ export class AuthController {
   async logout(@Request() req: any): Promise<any> {
     await this.authService.removeToken(req.user.id)
 
-    return {message: 'user logged out'};
+    return { message: 'user logged out' };
   }
 
 }
